@@ -13,7 +13,7 @@ conf.set("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
 spark = SparkSession.builder.config(conf=conf).getOrCreate() 
 
 def read_data():
-    df = spark.read.json('s3a://dataminded-academy-capstone-resources/raw/open_aq/')
+    df = spark.read.json('s3a://dataminded-academy-capstone-resources/Yannick/ingest/')
     df = df.select('*','coordinates.*','date.*').drop('coordinates','date')
     df = df.withColumn('local',psf.to_timestamp(psf.col('local')))
     df = df.withColumn('utc',psf.to_timestamp(psf.col('utc')))
