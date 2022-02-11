@@ -90,7 +90,7 @@ IMPORTANT NOTES:
 
 ### Step 1: Containerize
 Create a `Dockerfile` that packages your application. You can start from one of our Data Minded images
-which pre-installs PySpark and it's dependencies: put `FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.1.2-hadoop-3.3.1` at the top of your Dockerfile.
+which pre-installs Spark and it's dependencies: put `FROM public.ecr.aws/dataminded/spark-k8s-glue:v3.1.2-hadoop-3.3.1` at the top of your Dockerfile.
 
 ### Step 2: Push your image to an ECR repository
 Through the AWS console, create a private ECR repository. It's name should start with your AWS username.
@@ -100,10 +100,11 @@ After creation, push your docker image to this repo.
 With your image pushed to the repository, navigate to AWS Batch and create a new Job Definition. Apply the following configuration:
 - Name: Make sure it starts with your AWS username
 - Platform type: EC2
-- Container properties:
+- Execution role: `academy-capstone-winter-2022-batch-job-role`
+- Job configuration:
     - Image: Image you pushed during the previous step
     - Command: Depends on your image:)
-    - Job role configuration: `academy-capstone-winter-2022-batch-job-role`
+    - Job Role Configuration: `academy-capstone-winter-2022-batch-job-role`
 - Tags:
   - `environment`: `academy-capstone-winter-2022`
   
